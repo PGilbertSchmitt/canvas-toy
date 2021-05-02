@@ -1,12 +1,19 @@
+import React, { FC, useEffect, useRef } from 'react';
+import styled from 'styled-components';
 import { isNil } from 'ramda';
-import React, { PropsWithChildren, useEffect, useRef } from 'react';
 
-export interface CanvasProps<T extends Record<string, unknown>> {
-  draw: (ctx: CanvasRenderingContext2D, frame: number, controls: T) => void;
-  controls: T;
+const CanvasComponent = styled.canvas`
+  width: ${props => props.width};
+  height: ${props => props.height};
+`;
+export interface CanvasProps {
+  draw: (ctx: CanvasRenderingContext2D, frame: number, timestamp: number) => void;
+  init: (ctx: CanvasRenderingContext2D) => void;
+  height: string;
+  width: string;
 }
 
-const Canvas = <T extends Record<string, unknown>>({ draw, controls }: PropsWithChildren<CanvasProps<T>>) => {
+const Canvas: FC<CanvasProps> = ({ draw, init, height, width }) => {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -18,18 +25,19 @@ const Canvas = <T extends Record<string, unknown>>({ draw, controls }: PropsWith
     let frameCount = 0;
     let animationFrame: number;
 
-    const render = () => {
+    init(ctx);
+    const render: FrameRequestCallback = (timestamp: number) => {
       frameCount++;
-      draw(ctx, frameCount, controls);
+      draw(ctx, frameCount, timestamp);
       animationFrame = window.requestAnimationFrame(render);
     };
-    render();
+    render(0);
 
     return () => window.cancelAnimationFrame(animationFrame);
-  }, [ draw, controls ]);
+  }, [ draw ]);
 
   return (
-    <canvas ref={ref} />
+    <CanvasComponent height={height} width={width} ref={ref} />
   );
 };
 
