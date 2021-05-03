@@ -47,15 +47,22 @@ const ListItem = styled.div`
   margin-top: 4px;
   border-radius: 3px;
   cursor: pointer;
+  color: ${GREY_29};
 
   &:hover {
     background-color: ${GREY_203}
   }
 `;
 
+const InactiveListItem = styled(ListItem)`
+  &:hover {
+    background-color: ${GREY_236};
+  }
+  cursor: not-allowed;
+`;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: ${GREY_29};
 
   &:focus, &:hover, &:visited, &:link, &:active {
     text-decoration: none;
@@ -65,17 +72,29 @@ const StyledLink = styled(Link)`
 const projects = [
   {
     slug: 'birds',
-    title: 'Birds'
+    title: 'Birds',
+    active: true,
   },
   {
     slug: 'game_of_life',
-    title: 'Game of Life'
+    title: 'Game of Life',
+    active: false,
   },
-  {
-    slug: 'dope',
-    title: 'Dope'
-  }
 ];
+
+const ActiveLink: FC<{ title: string; slug: string; }> = ({ title, slug }) => (
+  <StyledLink to={`/canvas-toy/${slug}`}>
+    <ListItem>
+      {title}
+    </ListItem>
+  </StyledLink>
+);
+
+const InactiveLink: FC<{ title: string; }> = ({ title }) => (
+  <InactiveListItem>
+    {title} (Coming soon)
+  </InactiveListItem>
+);
 
 const FrontPage: FC = () => (
   <Layout>
@@ -84,11 +103,9 @@ const FrontPage: FC = () => (
       <h1>Neat Stuff</h1>
       <List>
         {projects.map(item => (
-          <StyledLink to={`/canvas-toy/${item.slug}`} key={item.slug}>
-            <ListItem>
-              {item.title}
-            </ListItem>
-          </StyledLink>
+          item.active
+            ? <ActiveLink title={item.title} slug={item.slug} />
+            : <InactiveLink title={item.title} />
         ))}
       </List>
     </ListContainer>

@@ -982,7 +982,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _constants_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/colors */ "./src/constants/colors.ts");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -994,23 +994,42 @@ var Layout = styled_components__WEBPACK_IMPORTED_MODULE_2__.default.div(_templat
 var Background = styled_components__WEBPACK_IMPORTED_MODULE_2__.default.div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  background-color: ", ";\n  height: 100%;\n  width: 100%;\n  position: fixed;\n  top: 0;\n  right: 0;\n  z-index: -1;\n"])), _constants_colors__WEBPACK_IMPORTED_MODULE_1__.GREY_236);
 var ListContainer = styled_components__WEBPACK_IMPORTED_MODULE_2__.default.div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  width: 400px;\n  margin: 0 auto;\n  margin-top: 150px;\n  margin-bottom: 100px;\n  padding: 20px;\n  border: 1px solid black;\n  border-radius: 3px;\n  background-color: white;\n"])));
 var List = styled_components__WEBPACK_IMPORTED_MODULE_2__.default.div(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n"])));
-var ListItem = styled_components__WEBPACK_IMPORTED_MODULE_2__.default.div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  padding: 7px 15px;\n  background-color: ", ";\n  margin-top: 4px;\n  border-radius: 3px;\n  cursor: pointer;\n\n  &:hover {\n    background-color: ", "\n  }\n"])), _constants_colors__WEBPACK_IMPORTED_MODULE_1__.GREY_236, _constants_colors__WEBPACK_IMPORTED_MODULE_1__.GREY_203);
-var StyledLink = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__.default)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  text-decoration: none;\n  color: ", ";\n\n  &:focus, &:hover, &:visited, &:link, &:active {\n    text-decoration: none;\n  }\n"])), _constants_colors__WEBPACK_IMPORTED_MODULE_1__.GREY_29);
+var ListItem = styled_components__WEBPACK_IMPORTED_MODULE_2__.default.div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  box-sizing: border-box;\n  padding: 7px 15px;\n  background-color: ", ";\n  margin-top: 4px;\n  border-radius: 3px;\n  cursor: pointer;\n  color: ", ";\n\n  &:hover {\n    background-color: ", "\n  }\n"])), _constants_colors__WEBPACK_IMPORTED_MODULE_1__.GREY_236, _constants_colors__WEBPACK_IMPORTED_MODULE_1__.GREY_29, _constants_colors__WEBPACK_IMPORTED_MODULE_1__.GREY_203);
+var InactiveListItem = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__.default)(ListItem)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  &:hover {\n    background-color: ", ";\n  }\n  cursor: not-allowed;\n"])), _constants_colors__WEBPACK_IMPORTED_MODULE_1__.GREY_236);
+var StyledLink = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__.default)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link)(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  text-decoration: none;\n\n  &:focus, &:hover, &:visited, &:link, &:active {\n    text-decoration: none;\n  }\n"])));
 var projects = [{
   slug: 'birds',
-  title: 'Birds'
+  title: 'Birds',
+  active: true
 }, {
   slug: 'game_of_life',
-  title: 'Game of Life'
-}, {
-  slug: 'dope',
-  title: 'Dope'
+  title: 'Game of Life',
+  active: false
 }];
 
-var FrontPage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Layout, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Background, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ListContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Neat Stuff"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(List, null, projects.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(StyledLink, {
-  to: "/canvas-toy/".concat(item.slug),
-  key: item.slug
-}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ListItem, null, item.title))))));
+var ActiveLink = _ref => {
+  var {
+    title,
+    slug
+  } = _ref;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(StyledLink, {
+    to: "/canvas-toy/".concat(slug)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ListItem, null, title));
+};
+
+var InactiveLink = _ref2 => {
+  var {
+    title
+  } = _ref2;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(InactiveListItem, null, title, " (Coming soon)");
+};
+
+var FrontPage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Layout, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Background, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ListContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Neat Stuff"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(List, null, projects.map(item => item.active ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ActiveLink, {
+  title: item.title,
+  slug: item.slug
+}) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(InactiveLink, {
+  title: item.title
+})))));
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FrontPage);
 
