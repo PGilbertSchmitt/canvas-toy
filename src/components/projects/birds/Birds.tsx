@@ -1,28 +1,7 @@
 import React from 'react';
+import { times } from 'ramda';
 import Canvas from '../../Canvas';
-
-interface Coord {
-  x: number;
-  y: number;
-}
-export class Bird {
-  private ctx: CanvasRenderingContext2D;
-  private pos: Coord;
-
-  constructor(ctx: CanvasRenderingContext2D, coord: Coord) {
-    this.ctx = ctx;
-    this.pos = coord;
-  }
-
-  draw(frameCount: number) {
-    console.log(`draw: ${frameCount}`);
-    const { ctx, pos: { x, y } } = this;
-    ctx.fillStyle = '#000000';
-    ctx.beginPath();
-    ctx.arc(x, y, 5*Math.sin(frameCount*0.05)**2, 0, 2*Math.PI);
-    ctx.fill();
-  }
-}
+import Bird from './Bird';
 
 const Birds = () => {
   const birds: Bird[] = [];
@@ -35,15 +14,14 @@ const Birds = () => {
       height={`${height-10}px`}
       width={`${width}px`}
       init={ctx => {
-        birds.push(new Bird(ctx, { x: 2, y: 2 }));
+        times(() => {
+          birds.push(new Bird(ctx, { x: (width / 2) - 200, y: (height / 2) - 100 }));
+        }, 2000);
       }}
-      draw={(ctx, frame) => {
+      draw={(ctx, frame, timestamp) => {
         ctx.clearRect(0, 0, width, height);
-        if (frame === 2) {
-          console.log(ctx.canvas.getBoundingClientRect());
-        }
         for (const bird of birds) {
-          bird.draw(frame);
+          bird.draw(ctx, frame, timestamp);
         }
       }}
     />
