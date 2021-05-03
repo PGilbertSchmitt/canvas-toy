@@ -9,6 +9,13 @@ const Birds = () => {
   const width = window.innerWidth;
   const height = window.innerHeight;
 
+  const drawMouse = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
+    ctx.fillStyle = '#13131330';
+    ctx.beginPath();
+    ctx.arc(x, y, 200, 0, 2*Math.PI);
+    ctx.fill();
+  };
+
   return (
     <Canvas
       height={`${height-10}px`}
@@ -18,11 +25,12 @@ const Birds = () => {
           birds.push(new Bird(ctx, { x: (width / 2) - 200, y: (height / 2) - 100 }));
         }, 2000);
       }}
-      draw={(ctx, frame, timestamp) => {
+      draw={(ctx, timestamp, mouseX, mouseY) => {
         ctx.clearRect(0, 0, width, height);
         for (const bird of birds) {
-          bird.draw(ctx, frame, timestamp);
+          bird.draw(ctx, timestamp, mouseX, mouseY);
         }
+        drawMouse(ctx, mouseX, mouseY);
       }}
     />
   );

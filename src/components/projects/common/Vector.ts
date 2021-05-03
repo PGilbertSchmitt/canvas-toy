@@ -8,15 +8,24 @@ export const radToVec = (rads: number): Vec2 => ({
   y: Math.cos(rads)
 });
 
-export const addVecs = (a: Vec2, b: Vec2) => ({
+export const vecToRad = (vec: Vec2): number => Math.atan2(-vec.x, -vec.y) + Math.PI;
+
+export const addVecs = (a: Vec2, b: Vec2): Vec2 => ({
   x: a.x + b.x,
   y: a.y + b.y
 });
 
-export const scale = (vec: Vec2, scalar: number) => ({
+export const subtractVecs = (a: Vec2, b: Vec2): Vec2 => ({
+  x: a.x - b.x,
+  y: a.y - b.y
+});
+
+export const scale = (vec: Vec2, scalar: number): Vec2 => ({
   x: vec.x * scalar,
   y: vec.y * scalar
 });
+
+export const magnitude = (vec: Vec2): number => Math.sqrt(vec.x**2 + vec.y**2);
 
 const clamp = (val: number, min: number, max: number): number => {
   let newVal = val % max;
