@@ -25,7 +25,7 @@ module.exports = {
   mode: "development",
   entry: "src/index.tsx",
   output: {
-    path: path.resolve('public'),
+    path: path.resolve('docs'),
     filename: "bundle.js"
   },
   resolve: {

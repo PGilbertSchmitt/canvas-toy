@@ -14,12 +14,12 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "strictNullChecks": true,
-    "outDir": "./dist",
+    "outDir": "./docs",
     "baseUrl": ".",
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "docs"
   ],
   "include": [
     "./src/**/*.ts",
