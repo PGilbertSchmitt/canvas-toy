@@ -84,7 +84,7 @@ const FrontPage: FC = () => (
       <h1>Neat Stuff</h1>
       <List>
         {projects.map(item => (
-          <StyledLink to={item.slug} key={item.slug}>
+          <StyledLink to={`/canvas-toy/${item.slug}`} key={item.slug}>
             <ListItem>
               {item.title}
             </ListItem>

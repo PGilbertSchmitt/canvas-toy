@@ -875,13 +875,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Route, {
-  path: "/",
+  path: "/canvas-toy",
   exact: true,
   component: _FrontPage__WEBPACK_IMPORTED_MODULE_1__.default
 }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Route, {
-  path: "/birds",
+  path: "/canvas-toy/birds",
   component: _projects_birds_Birds__WEBPACK_IMPORTED_MODULE_2__.default
-})));
+}), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Route, {
+  path: "*"
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Redirect, {
+  to: '/canvas-toy'
+}))));
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -1004,7 +1008,7 @@ var projects = [{
 }];
 
 var FrontPage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Layout, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Background, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ListContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Neat Stuff"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(List, null, projects.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(StyledLink, {
-  to: item.slug,
+  to: "/canvas-toy/".concat(item.slug),
   key: item.slug
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ListItem, null, item.title))))));
 
