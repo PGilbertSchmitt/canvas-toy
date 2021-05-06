@@ -1332,7 +1332,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "BASE_ROUTE": () => (/* binding */ BASE_ROUTE)
 /* harmony export */ });
-var BASE_ROUTE = "/" || 0;
+var BASE_ROUTE = "/canvas-toy/" || 0;
 
 /***/ }),
 
