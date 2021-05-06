@@ -2,7 +2,7 @@ name: Build Docs Folder
 
 on:
   # Manual only
-  workflow-dispatch:
+  workflow_dispatch:
 
 jobs:
   build:
