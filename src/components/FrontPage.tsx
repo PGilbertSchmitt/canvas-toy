@@ -1,3 +1,4 @@
+import { join } from 'path';
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,6 +7,7 @@ import {
   GREY_203,
   GREY_236,
 } from '../constants/colors';
+import { BASE_ROUTE } from '../constants/route';
 
 const Layout = styled.div`
   font-family: 'Fira Sans', sans-serif;
@@ -83,7 +85,7 @@ const projects = [
 ];
 
 const ActiveLink: FC<{ title: string; slug: string; }> = ({ title, slug }) => (
-  <StyledLink to={`/canvas-toy/${slug}`}>
+  <StyledLink to={join(BASE_ROUTE, slug)}>
     <ListItem>
       {title}
     </ListItem>

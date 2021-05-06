@@ -1,0 +1,20 @@
+name: Build Docs Folder
+
+on:
+  # Manual only
+  workflow-dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install
+        run: npm install
+      - name: Build docs
+        run: npm run build:prod
+      - name: Push bundle used by GH-page site
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Auto-update docs
+          file_pattern: docs/*

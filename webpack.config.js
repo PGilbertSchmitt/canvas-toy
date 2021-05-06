@@ -1,5 +1,6 @@
 const path = require("path");
 const tsConfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const { DefinePlugin } = require("webpack");
 
 var babelOptions = {
   presets: [
@@ -36,7 +37,10 @@ module.exports = {
     extensions: [".js", ".ts", ".tsx"],
     plugins: [
       new tsConfigPathsPlugin()
-    ]
+    ],
+    fallback: {
+      "path": require.resolve("path-browserify")
+    }
   },
   devtool: "source-map",
   module: {
@@ -70,7 +74,9 @@ module.exports = {
       }
     ]
   },
-  node: {
-    __dirname: false,
-  }
+  plugins: [
+    new DefinePlugin({
+      'process.env.BASE_ROUTE': JSON.stringify(process.env.BASE_ROUTE)
+    })
+  ]
 };

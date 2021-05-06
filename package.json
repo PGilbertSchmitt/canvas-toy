@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "http-server ./docs --proxy http://localhost:8080?",
     "webpack": "webpack",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "build:dev": "BASE_ROUTE=\"/\" npm run webpack",
+    "build:prod": "BASE_ROUTE=\"/canvas-toy/\" npm run webpack"
   },
   "author": "",
   "license": "ISC",
@@ -38,6 +39,7 @@
   "dependencies": {
     "faker": "^5.5.3",
     "http-server": "^0.12.3",
+    "path-browserify": "^1.0.1",
     "ramda": "^0.27.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
