@@ -16,5 +16,5 @@ jobs:
       - name: Push bundle used by GH-page site
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Auto-update docs
+          commit_message: Update docs
           file_pattern: docs/*
