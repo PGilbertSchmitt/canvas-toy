@@ -871,7 +871,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _constants_route__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants/route */ "./src/constants/route.ts");
 /* harmony import */ var _FrontPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FrontPage */ "./src/components/FrontPage.tsx");
-/* harmony import */ var _projects_birds_Birds__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./projects/birds/Birds */ "./src/components/projects/birds/Birds.tsx");
+/* harmony import */ var _projects_birds_Birds__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../projects/birds/Birds */ "./src/projects/birds/Birds.tsx");
 
 
 
@@ -910,7 +910,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var ramda__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ramda */ "./node_modules/ramda/es/isNil.js");
-var _templateObject;
+var _templateObject, _templateObject2;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -918,6 +918,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 var CanvasComponent = styled_components__WEBPACK_IMPORTED_MODULE_1__.default.canvas(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  width: ", ";\n  height: ", ";\n"])), props => props.width, props => props.height);
+var Framerate = styled_components__WEBPACK_IMPORTED_MODULE_1__.default.div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  position: fixed;\n  bottom: 0;\n  right: 0;\n  padding: 10px;\n  width: fit-content;\n  heigth: fit-content;\n  color: red;\n  font-size: 20px;\n  background-color: #d0d0d0;\n"])));
 
 var Canvas = _ref => {
   var {
@@ -927,6 +928,10 @@ var Canvas = _ref => {
     width
   } = _ref;
   var ref = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var [initialized, setInitialized] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  var [frames, setFrames] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  var [lastFrameTime, setLastFrameTime] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  var [lastFrameCount, setLastFrameCount] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var canvasEl = ref.current;
     var ctx = canvasEl === null || canvasEl === void 0 ? void 0 : canvasEl.getContext('2d');
@@ -941,7 +946,11 @@ var Canvas = _ref => {
     var animationFrame;
     var lastTime = performance.now();
     var mouseX = 0;
-    var mouseY = 0;
+    var mouseY = 0; // let mouseEvt: MouseEvent | null = null;
+    // let keyEvt: KeyboardEvent | null = null;
+    // canvasEl.addEventListener('keydown', evt => {
+    //   keyEvt = evt;
+    // });
 
     var onMouseMove = evt => {
       mouseX = evt.clientX - offsetX;
@@ -949,23 +958,40 @@ var Canvas = _ref => {
     };
 
     canvasEl.addEventListener('mousemove', onMouseMove);
-    init(ctx);
+
+    if (!initialized) {
+      init(ctx);
+      setInitialized(true);
+    }
 
     var render = timestamp => {
       // frameCount++;
-      draw(ctx, (timestamp - lastTime) / 1000, mouseX, mouseY);
+      var delta = (timestamp - lastTime) / 1000;
       lastTime = timestamp;
-      animationFrame = window.requestAnimationFrame(render);
+      draw([ctx, delta, mouseX, mouseY]);
+      animationFrame = window.requestAnimationFrame(render); // keyEvt = null;
+      // setFps(Math.floor(Math.random() * 20) + 40);
+      // Managing FPS
+
+      if (timestamp - lastFrameTime > 1000) {
+        console.log(timestamp, '-', lastFrameTime);
+        setLastFrameTime(timestamp);
+        setLastFrameCount(frames);
+        console.log("New FPS: ".concat(frames));
+        setFrames(0);
+      } else {
+        setFrames(frames + 1);
+      }
     };
 
     render(0);
     return () => window.cancelAnimationFrame(animationFrame);
-  }, [draw]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(CanvasComponent, {
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Framerate, null, lastFrameCount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(CanvasComponent, {
     height: height,
     width: width,
     ref: ref
-  });
+  }));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Canvas);
@@ -1045,10 +1071,52 @@ var FrontPage = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElem
 
 /***/ }),
 
-/***/ "./src/components/projects/birds/Bird.ts":
-/*!***********************************************!*\
-  !*** ./src/components/projects/birds/Bird.ts ***!
-  \***********************************************/
+/***/ "./src/constants/colors.ts":
+/*!*********************************!*\
+  !*** ./src/constants/colors.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GREY_236": () => (/* binding */ GREY_236),
+/* harmony export */   "GREY_203": () => (/* binding */ GREY_203),
+/* harmony export */   "GREY_179": () => (/* binding */ GREY_179),
+/* harmony export */   "GREY_128": () => (/* binding */ GREY_128),
+/* harmony export */   "GREY_93": () => (/* binding */ GREY_93),
+/* harmony export */   "GREY_60": () => (/* binding */ GREY_60),
+/* harmony export */   "GREY_29": () => (/* binding */ GREY_29)
+/* harmony export */ });
+var GREY_236 = '#ececec';
+var GREY_203 = '#cbcbcb';
+var GREY_179 = '#b3b3b3';
+var GREY_128 = '#808080';
+var GREY_93 = '#5d5d5d';
+var GREY_60 = '#3c3c3d';
+var GREY_29 = '#1d1d1d';
+
+/***/ }),
+
+/***/ "./src/constants/route.ts":
+/*!********************************!*\
+  !*** ./src/constants/route.ts ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "BASE_ROUTE": () => (/* binding */ BASE_ROUTE)
+/* harmony export */ });
+var BASE_ROUTE = "/" || 0;
+
+/***/ }),
+
+/***/ "./src/projects/birds/Bird.ts":
+/*!************************************!*\
+  !*** ./src/projects/birds/Bird.ts ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1059,7 +1127,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var faker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! faker */ "./node_modules/faker/index.js");
 /* harmony import */ var faker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(faker__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _common_Vector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/Vector */ "./src/components/projects/common/Vector.ts");
+/* harmony import */ var _common_Vector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/Vector */ "./src/projects/common/Vector.ts");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -1176,10 +1244,10 @@ _defineProperty(Bird, "MOUSE_EFFECT_DIST", 200);
 
 /***/ }),
 
-/***/ "./src/components/projects/birds/Birds.tsx":
-/*!*************************************************!*\
-  !*** ./src/components/projects/birds/Birds.tsx ***!
-  \*************************************************/
+/***/ "./src/projects/birds/Birds.tsx":
+/*!**************************************!*\
+  !*** ./src/projects/birds/Birds.tsx ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1189,8 +1257,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var ramda__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ramda */ "./node_modules/ramda/es/times.js");
-/* harmony import */ var _Canvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Canvas */ "./src/components/Canvas.tsx");
-/* harmony import */ var _Bird__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Bird */ "./src/components/projects/birds/Bird.ts");
+/* harmony import */ var _components_Canvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Canvas */ "./src/components/Canvas.tsx");
+/* harmony import */ var _Bird__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Bird */ "./src/projects/birds/Bird.ts");
 
 
 
@@ -1208,7 +1276,7 @@ var Birds = () => {
     ctx.fill();
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Canvas__WEBPACK_IMPORTED_MODULE_1__.default, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Canvas__WEBPACK_IMPORTED_MODULE_1__.default, {
     height: "".concat(height - 10, "px"),
     width: "".concat(width, "px"),
     init: ctx => {
@@ -1219,7 +1287,8 @@ var Birds = () => {
         }));
       }, 2000);
     },
-    draw: (ctx, timestamp, mouseX, mouseY) => {
+    draw: _ref => {
+      var [ctx, timestamp, mouseX, mouseY] = _ref;
       ctx.clearRect(0, 0, width, height);
 
       for (var bird of birds) {
@@ -1235,10 +1304,10 @@ var Birds = () => {
 
 /***/ }),
 
-/***/ "./src/components/projects/common/Vector.ts":
-/*!**************************************************!*\
-  !*** ./src/components/projects/common/Vector.ts ***!
-  \**************************************************/
+/***/ "./src/projects/common/Vector.ts":
+/*!***************************************!*\
+  !*** ./src/projects/common/Vector.ts ***!
+  \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1291,48 +1360,6 @@ var loop = function loop(vec, max) {
     y: clamp(vec.y, min.y, max.y)
   };
 };
-
-/***/ }),
-
-/***/ "./src/constants/colors.ts":
-/*!*********************************!*\
-  !*** ./src/constants/colors.ts ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "GREY_236": () => (/* binding */ GREY_236),
-/* harmony export */   "GREY_203": () => (/* binding */ GREY_203),
-/* harmony export */   "GREY_179": () => (/* binding */ GREY_179),
-/* harmony export */   "GREY_128": () => (/* binding */ GREY_128),
-/* harmony export */   "GREY_93": () => (/* binding */ GREY_93),
-/* harmony export */   "GREY_60": () => (/* binding */ GREY_60),
-/* harmony export */   "GREY_29": () => (/* binding */ GREY_29)
-/* harmony export */ });
-var GREY_236 = '#ececec';
-var GREY_203 = '#cbcbcb';
-var GREY_179 = '#b3b3b3';
-var GREY_128 = '#808080';
-var GREY_93 = '#5d5d5d';
-var GREY_60 = '#3c3c3d';
-var GREY_29 = '#1d1d1d';
-
-/***/ }),
-
-/***/ "./src/constants/route.ts":
-/*!********************************!*\
-  !*** ./src/constants/route.ts ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "BASE_ROUTE": () => (/* binding */ BASE_ROUTE)
-/* harmony export */ });
-var BASE_ROUTE = "/canvas-toy/" || 0;
 
 /***/ }),
 

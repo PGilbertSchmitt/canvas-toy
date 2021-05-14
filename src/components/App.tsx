@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { BASE_ROUTE } from '../constants/route';
 
 import FrontPage from './FrontPage';
-import Birds from './projects/birds/Birds';
+import Birds from '../projects/birds/Birds';
 
 const App: FC = () => (
   <BrowserRouter>
